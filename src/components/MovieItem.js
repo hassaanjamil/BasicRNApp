@@ -1,7 +1,8 @@
-import {StyleSheet, Text, View, useColorScheme} from 'react-native';
+import {Image, StyleSheet, Text, View, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {IMAGES_BASE_URL} from '../data/network/ApiServices';
 
-export const MovieItem = ({movie}) => {
+export const MovieItem = ({item, index}) => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -11,18 +12,29 @@ export const MovieItem = ({movie}) => {
   };
   return (
     <View style={[styles.root, backgroundStyle]}>
-      <Text style={textStyle}>{movie?.title ?? ''}</Text>
+      <View style={styles.imageContainer}>
+        <Image
+          src={`${IMAGES_BASE_URL}${item.poster_path}`}
+          style={styles.image}
+          resizeMode="cover"
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingStart: 3,
+  },
+  image: {
     width: 100,
     height: 100,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    padding: 3,
-    backgroundColor: 'blue',
   },
 });

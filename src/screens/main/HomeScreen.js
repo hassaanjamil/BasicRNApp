@@ -27,20 +27,20 @@ export const HomeScreen = ({navigation}) => {
 
   const [popularMovies, setPopularMovies] = useState([]);
   const [upcomingMovies, setUpcomingMovies] = useState([]);
-  const [upcomingMovieImages, setUpcomingMoviesImages] = useState([]);
+  const [sliderImages, setSliderImages] = useState([]);
 
   useEffect(() => {
     // fetching upcoming movies and updating state of upcomingMovies and upcomingMovieImages
     getUpcomingMovies()
-      .then(movies => {
-        setUpcomingMovies(movies);
-
-        const upcomMovieImages = [];
-        upcomingMovies.forEach(movie => {
+      .then(data => {
+        const movies = data;
+        const movieImages = [];
+        movies.forEach(movie => {
           const imageUrl = `${IMAGES_BASE_URL}${movie.poster_path}`;
-          upcomMovieImages.push(imageUrl);
+          movieImages.push(imageUrl);
         });
-        setUpcomingMoviesImages(upcomMovieImages);
+        setUpcomingMovies(movies);
+        setSliderImages(movieImages);
       })
       .catch(error => {
         console.log(error);
@@ -57,26 +57,32 @@ export const HomeScreen = ({navigation}) => {
   }, [navigation]);
 
   return (
-    <ScrollView style={[styles.root, backgroundStyle]}>
-      <View style={styles.contentContainer}>
-        <ImageSlider data={upcomingMovieImages} />
-        <CarouselSection title="Upcoming Movies" content={upcomingMovies} />
-        <CarouselSection title="Popular Movies" content={popularMovies} />
-
-        {/* <Text style={textStyle}>{`${
-          popularMovies[0]?.original_title ?? ''
-        }`}</Text> */}
+    <ScrollView
+      style={[styles.root, backgroundStyle]}
+      showsVerticalScrollIndicator={false}
+      contentInsetAdjustmentBehavior="automatic">
+      <View style={styles.sliderContainer}>
+        <ImageSlider data={sliderImages} />
       </View>
+      <View style={styles.horizontalListSectionContainer}>
+        <CarouselSection title="Upcoming Movies" content={upcomingMovies} />
+      </View>
+      <View style={styles.horizontalListSectionContainer}>
+        <CarouselSection title="Popular Movies" content={popularMovies} />
+      </View>
+      {/* <CarouselSection title="Popular Movies" content={popularMovies} /> */}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {},
-  contentContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: 5,
+  root: {flex: 1},
+  sliderContainer: {
+    borderBottomStartRadius: 20,
+    borderBottomEndRadius: 20,
+    overflow: 'hidden',
+  },
+  horizontalListSectionContainer: {
+    marginTop: 20,
   },
 });
