@@ -16,8 +16,9 @@ export const CarouselSection = ({title, content}) => {
       <View style={styles.titleContainer}>
         <Text style={[styles.title, textStyle]}>{title}</Text>
       </View>
-      <View>
+      <View style={styles.listContainer}>
         <FlatList
+          showsHorizontalScrollIndicator={false}
           data={content}
           horizontal={true}
           keyExtractor={item => item.id}
@@ -33,10 +34,14 @@ export const CarouselSection = ({title, content}) => {
 const styles = StyleSheet.create({
   root: {},
   titleContainer: {
+    marginTop: 10,
     marginStart: 20,
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
+  },
+  listContainer: {
+    marginTop: 10,
   },
 });

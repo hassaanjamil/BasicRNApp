@@ -61,12 +61,8 @@ export const HomeScreen = ({navigation}) => {
       style={[styles.root, backgroundStyle]}
       showsVerticalScrollIndicator={false}
       contentInsetAdjustmentBehavior="automatic">
-      <View style={styles.sliderContainer}>
-        <ImageSlider data={sliderImages} />
-      </View>
-      <View style={styles.horizontalListSectionContainer}>
-        <CarouselSection title="Upcoming Movies" content={upcomingMovies} />
-      </View>
+      <ImageSlider data={sliderImages} />
+      <CarouselSection title="Upcoming Movies" content={upcomingMovies} />
       <View style={styles.horizontalListSectionContainer}>
         <CarouselSection title="Popular Movies" content={popularMovies} />
       </View>
@@ -77,11 +73,6 @@ export const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   root: {flex: 1},
-  sliderContainer: {
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
-    overflow: 'hidden',
-  },
   horizontalListSectionContainer: {
     marginTop: 20,
   },
